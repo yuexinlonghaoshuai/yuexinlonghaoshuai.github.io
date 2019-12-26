@@ -1,106 +1,159 @@
+
 $(function(){
-    if($('#home-slider').length>0 && $('#home-slider-nav').length>0)
-	{
-		$('#home-slider').cycle({
-			fx: 'fade', //scrollHorz
-			speed: 500,
-			timeout: 6000,			
-			pager: '#home-slider-nav', 
-            pagerEvent: 'mouseover',
-            pagerAnchorBuilder: function(idx, slide) {	
-                return '#home-slider-nav dl:eq(' + idx + ')';
-			}
+    //nav 
+	jQuery("#nav").slide({
+		type: "menu",
+		titCell: ".nLi",
+		targetCell: ".sub",
+		effect: "slideDown",
+		delayTime: 300,
+		triggerTime: 0,
+		returnDefault: true
+	});
+	//banner
+	jQuery(".slideBox").slide({
+		mainCell: ".bd ul",
+		effect: "leftLoop",
+		autoPlay: true
+	});
+	//图片轮播
+	jQuery(".picScroll-left").slide({
+		mainCell: ".bd ul",
+		autoPage: true,
+		effect: "leftLoop",
+		autoPlay: true,
+		vis: 3
+	});
+	//饭心服务
+	jQuery(".server_b").slide({
+		mainCell: ".bd ul",
+		effect: "leftLoop",
+		autoPlay: true
+	});
+	$(".server_b .bd li div:last-child").css({
+		"float":"right"
+	});
+	//给元素动态加载class名称
+	window.onload=function(){
+		$(".footer ul li:nth-child(2)").addClass("cur");
+		$(".footer ul li:last-child").addClass("cur1");
+		$(".accepBom ul li:nth-child(2n)").addClass("cur");
+	}
+	//产品展示
+	$(".show_bot ul li:nth-child(4n)").css({
+		"float":"right",
+		"margin-right":"0"
+	});
+	//饭心客户
+	$(".customer ul li:nth-child(5n)").css({
+		"float":"right",
+		"margin-right":"0"
+	});
+	//商务合作
+	$(".cooForm h1 input:nth-child(2)").css({
+		"float":"right"
+	});
+	
+	//弹出层
+//	$(".details").click(function(){
+//		$("#TB_overlayBG").css({
+//			display:"block",height:$(document).height()
+//		});
+//		$(".layer").css({
+//			top:($(window).height()-$(".layer").height())/1.5+$(window).scrollTop()+"px",
+//			display:"block"
+//		});
+//	});
+//	$(".close").click(function(){
+//		$("#TB_overlayBG").css({
+//			display:"none",height:$(document).height()
+//		});
+//		$(".layer").css({
+//			top:($(window).height()-$(".layer").height())/1.5+$(window).scrollTop()+"px",
+//			display:"none"
+//		});
+//	});
+	$(document).ready(function(){
+		$(".accepBom ul li .details").click(function(){
+			$("#TB_overlayBG").css({
+				display:"block",height:$(document).height()
+			});
+			var index = $(this).parents(".accepBom ul li").index();
+			$('.layer').eq(index).css({
+				top:($(window).height()-$(".layer").height())/1.5+$(window).scrollTop()+"px",
+				display:"block"
+			});
 		});
-                
-        var totalW = parseInt($(window).width());
-		//$(".slider-item").css("max-width",totalW+"px");
-		$("#home-slider").css("width",totalW+"px");
-		
-        $('.slider-item img').each(function(){
-            var imgObj = $(this);
-            var parentBox = $('.slider-item');
-            var objImagePreloader = new Image();            
-            objImagePreloader.onload = function() {
-                width =$(".slider-item img").width();  
-				//alert(width+"--"+totalW);
-                var leftpos = (totalW-parseInt(width))/2;
-                leftpos = leftpos.toFixed(0);
-                parentBox.css({
-                    'margin-left' : leftpos+'px'
-                    
-                });
-            };
-            objImagePreloader.src = $(this).attr('src');
-        });
-	};
+		$(".close").click(function(){
+			$("#TB_overlayBG").fadeOut();
+			$(this).parents('.layer').fadeOut();
+		});
+	});
 	
 	
-	 function isScrolledIntoView(elem) {
-        var docViewTop = $(window).scrollTop();
-        var docViewBottom = docViewTop + $(window).height();
-        var elemTop = $(elem).offset().top;
-        if (elemTop + 50 < docViewBottom) {
-            return true
-        } else {
-            return false
-        }
-    }
-    function animateShow(item, time,callback) {
-        if ($(item).attr('init') == 'false'&& isScrolledIntoView($(item).parent()) ){
-            $(item).attr('init', 'true');
-            setTimeout(function(){
-                $(item).fadeIn(800);
-				
-            },time)
-        }
-        }
-		function animateFade(item, time,callback) {
-        if ($(item).attr('init') == 'false'&& isScrolledIntoView($(item).parent()) ){
-            $(item).attr('init', 'true');
-            setTimeout(function(){
-                $(item).animate({opacity:1.0},500);
-				
-            },time)
-        }
-        }
-		
-    $(window).scroll(function () {
-		animateFade('.cases_dl',300);
-		animateShow('.partners_table',300);
-       
-    });
-    
+	//动态加class
+	$(".show_top a").click(function(){
+		$(this).addClass('cur').siblings().removeClass('cur');
+	});
+	
+});
 
+$(function(){
+	var text = '姓名';
+	$('#testA').focus(function() {
+		if (text == $(this).val()) {
+			$(this).val('');
+			$(this).css({
+				"color":"#333"
+			});
+		}
+	});
+	$('#testA').blur(function() {
+		var value = $(this).val();
+		if (value == '' || value == text) {
+			$(this).val(text);
+			$(this).css({
+				"color":"#969696"
+			});
+		}
+	});
 	
-	//$('.img_case').adipoli({
-//                'startEffect' : 'transparent',
-//                'hoverEffect' : 'boxRandom'
-//            });
+	var text1 = '电话';
+	$('#testB').focus(function() {
+		if (text1 == $(this).val()) {
+			$(this).val('');
+			$(this).css({
+				"color":"#333"
+			});
+		}
+	});
+	$('#testB').blur(function() {
+		var value = $(this).val();
+		if (value == '' || value == text1) {
+			$(this).val(text1);
+			$(this).css({
+				"color":"#969696"
+			});
+		}
+	});
 	
-	//$('.img_partner').adipoli({
-//                'startEffect' : 'grayscale',
-//                'hoverEffect' : 'normal'
-//            });
-})
-
-function banner_hover(i)
-{
-	$("#home-slider-nav>dl").each(function(index){
-			if(i==index){
-			   $(this).addClass("sel");
-			}
-			else
-			{
-				 $(this).removeClass("sel");
-			}
-										   }
-    )
-}
-function banner_out()
-{
-	$("#home-slider-nav>dl").each(function()
-										   {
-								  $(this).removeClass("sel");
-										   }
-    )
-}
+	var text2 = '留言';
+	$('#testC').focus(function() {
+		if (text2 == $(this).val()) {
+			$(this).val('');
+			$(this).css({
+				"color":"#333"
+			});
+		}
+	});
+	$('#testC').blur(function() {
+		var value = $(this).val();
+		if (value == '' || value == text2) {
+			$(this).val(text2);
+			$(this).css({
+				"color":"#969696"
+			});
+		}
+	});
+	
+});
